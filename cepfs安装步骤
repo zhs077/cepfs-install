@@ -2,4 +2,6 @@
 
 1. 安装包部署
 2. 防火墙关闭，时钟同步
-ceph.conf
+3. ceph.conf 
+4.生成一个uuid
+  uuidgen
