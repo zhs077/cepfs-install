@@ -6,6 +6,6 @@
 4.生成一个uuid
   uuidgen
   4834e3bd-3b59-4536-9465-36f2bd13f68a
-5.为监控节点创建管理密钥
+5.`为监控节点创建管理密钥`
   ceph-authtool --create-keyring /tmp/ceph.mon.keyring --gen-key -n mon. --cap mon 'allow *'
   
