@@ -6,5 +6,5 @@
 4.```ceph fs rm cephfs --yes-i-really-mean-it``` \
 5.```ceph osd pool delete metadata metadata --yes-i-really-really-mean-it``` \
 ## cephfs挂载
-1.内核挂载 mount -t ceph 192.168.159.131:6789:/  /mnt/cephfs -o name=admin,secret=AQDuGjFabSMHAxAAEbYLDjpa3EQUaSGB/EtkXg== \
-2.ceph-fuse 挂载（本地需要有 /etc/ceph/ceph.client.admin.keyring ） ceph-fuse -m  xxxx,yyyy,yyy:6789 /mnt/cephfs  \
+1.内核挂载 ```mount -t ceph 192.168.159.131:6789:/  /mnt/cephfs -o name=admin,secret=AQDuGjFabSMHAxAAEbYLDjpa3EQUaSGB/EtkXg== ```\
+2.ceph-fuse 挂载（本地需要有 /etc/ceph/ceph.client.admin.keyring ） ```ceph-fuse -m  xxxx,yyyy,yyy:6789 /mnt/cephfs```  \
