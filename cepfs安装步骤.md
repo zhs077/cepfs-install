@@ -48,10 +48,13 @@
     /var/lib/ceph/bootstrap-osd/ceph.keyring 拷贝到所有机器（理论上拷贝到osd机器就可以） <br>
     /tmp/ceph.mon.keyring 拷贝到所有机器（理论上是mon机器就可以） <br>
     /var/lib/ceph/bootstrap-mds/ceph.keyring 拷贝到所有机器（理论上拷贝到mds机器就可以） <br><br>
-新增mon2,mon3节点 <br>
-17。 在node2上创建一个默认的数据目录
- ```sudo -u ceph mkdir /var/lib/ceph/mon/ceph-node2``` <br>
- 在node2上修改ceph.mon.keyring属主和属组为ceph
+## 新增mon2,mon3节点 <br>
+### 1.在mon2上创建一个默认的数据目录
+ ```sudo -u ceph mkdir /var/lib/ceph/mon/ceph-mon2``` <br><br>
+### 2.在node2上修改ceph.mon.keyring属主和属组为ceph
+ ```chown ceph.ceph /tmp/ceph.mon.keyring``` <br><br>
+ ### 3.获取密钥和monmap信息(从mon1机器拷贝过来的秘钥)
+ 
 
 
   
