@@ -1,4 +1,4 @@
-*** 版本jewel,没有采用ceph-deploy 部署，操作系统centos7.2 ***
+**版本jewel,没有采用ceph-deploy 部署，操作系统centos7.2 **
 ## 前置步骤
 1. 安装包部署 <br>
 2. 防火墙关闭，时钟同步 <br>
