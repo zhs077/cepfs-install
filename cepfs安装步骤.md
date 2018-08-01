@@ -43,7 +43,7 @@
   ```systemctl status ceph-mon@node1``` <br><br>
 11. 设置mon开机自动启动 <br>
   ```systemctl enable ceph-mon@node1``` <br><br>
-  
+12.第一个算节点部署成功 
 16.  /etc/ceph/* 文件拷贝到所有机器 <br>
     /var/lib/ceph/bootstrap-osd/ceph.keyring 拷贝到所有机器（理论上拷贝到osd机器就可以） <br>
     /tmp/ceph.mon.keyring 拷贝到所有机器（理论上是mon机器就可以） <br>
