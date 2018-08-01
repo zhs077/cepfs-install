@@ -1,19 +1,18 @@
-# 版本jewel,没有采用ceph-deploy 部署，操作系统centos7.2 
+*** 版本jewel,没有采用ceph-deploy 部署，操作系统centos7.2 ***
 ## 前置步骤
-1. 安装包部署 \
-2. 防火墙关闭，时钟同步\
-3.创建一个ceph虚拟用户\
-  ```echo "ceph:x:167:167:Ceph daemons:/var/lib/ceph:/sbin/nologin" >> /etc/passwd```\
-  ```echo "ceph:x:167:" >>  /etc/group```\
-
-3. ceph.conf \
-4.生成一个uuid\
-  ```uuidgen```\
-  4834e3bd-3b59-4536-9465-36f2bd13f68a\
-   ##部署MON节点(3台机器）
-1.为监控节点创建管理密钥 \
-  ```ceph-authtool --create-keyring /tmp/ceph.mon.keyring --gen-key -n mon. --cap mon 'allow *'```\
-  creating /tmp/ceph.mon.keyring\
+1. 安装包部署 <br>
+2. 防火墙关闭，时钟同步 <br>
+3.创建一个ceph虚拟用户 <br>
+  ```echo "ceph:x:167:167:Ceph daemons:/var/lib/ceph:/sbin/nologin" >> /etc/passwd```<br>
+  ```echo "ceph:x:167:" >>  /etc/group``` <br>
+4.生成一个uuid <br>
+  ```uuidgen``` <br>
+  4834e3bd-3b59-4536-9465-36f2bd13f68a <br>
+5. ceph.conf <br>
+ ## 部署MON节点(3台机器）
+1.为监控节点创建管理密钥 <br>
+  ```ceph-authtool --create-keyring /tmp/ceph.mon.keyring --gen-key -n mon. --cap mon 'allow *'``` <br>
+  creating /tmp/ceph.mon.keyring <br>
 6.为ceph amin用户创建管理集群的密钥并赋予访问权限\
   ```sudo ceph-authtool --create-keyring /etc/ceph/ceph.client.admin.keyring --gen-key -n client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' --cap mgr 'allow *'```\
   creating /etc/ceph/ceph.client.admin.keyring\
