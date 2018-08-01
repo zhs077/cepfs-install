@@ -2,10 +2,10 @@
 ## 前置步骤
 1. 安装包部署 <br>
 2. 防火墙关闭，时钟同步 <br>
-3.创建一个ceph虚拟用户 <br>
+3. 创建一个ceph虚拟用户 <br>
   ```echo "ceph:x:167:167:Ceph daemons:/var/lib/ceph:/sbin/nologin" >> /etc/passwd```<br>
   ```echo "ceph:x:167:" >>  /etc/group``` <br>
-4.生成一个uuid <br>
+4. 生成一个uuid <br>
   ```uuidgen``` <br>
   4834e3bd-3b59-4536-9465-36f2bd13f68a <br>
 5. ceph.conf <br>
