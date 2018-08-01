@@ -1,23 +1,24 @@
-#版本jewel,没有采用ceph-deploy 部署，操作系统centos7.2
+# 版本jewel,没有采用ceph-deploy 部署，操作系统centos7.2 
+## 前置步骤
+1. 安装包部署 \
+2. 防火墙关闭，时钟同步\
+3.创建一个ceph虚拟用户\
+  ```echo "ceph:x:167:167:Ceph daemons:/var/lib/ceph:/sbin/nologin" >> /etc/passwd```\
+  ```echo "ceph:x:167:" >>  /etc/group```\
 
-1. 安装包部署
-2. 防火墙关闭，时钟同步
-3.创建一个ceph虚拟用户
-  echo "ceph:x:167:167:Ceph daemons:/var/lib/ceph:/sbin/nologin" >> /etc/passwd
-  echo "ceph:x:167:" >>  /etc/group
-
-3. ceph.conf 
-4.生成一个uuid
-  uuidgen
-  4834e3bd-3b59-4536-9465-36f2bd13f68a
-5.为监控节点创建管理密钥
-  ceph-authtool --create-keyring /tmp/ceph.mon.keyring --gen-key -n mon. --cap mon 'allow *'
-  creating /tmp/ceph.mon.keyring
-6.为ceph amin用户创建管理集群的密钥并赋予访问权限
-  sudo ceph-authtool --create-keyring /etc/ceph/ceph.client.admin.keyring --gen-key -n client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' --cap mgr 'allow *'
-  creating /etc/ceph/ceph.client.admin.keyring
-7.生成一个引导-osd密钥环，生成一个client.bootstrap-osd用户并将用户添加到密钥环中
-  sudo ceph-authtool --create-keyring /var/lib/ceph/bootstrap-osd/ceph.keyring --gen-key -n client.bootstrap-osd --cap mon 'profile bootstrap-osd'
+3. ceph.conf \
+4.生成一个uuid\
+  ```uuidgen```\
+  4834e3bd-3b59-4536-9465-36f2bd13f68a\
+   ##部署MON节点(3台机器）
+1.为监控节点创建管理密钥 \
+  ```ceph-authtool --create-keyring /tmp/ceph.mon.keyring --gen-key -n mon. --cap mon 'allow *'```\
+  creating /tmp/ceph.mon.keyring\
+6.为ceph amin用户创建管理集群的密钥并赋予访问权限\
+  ```sudo ceph-authtool --create-keyring /etc/ceph/ceph.client.admin.keyring --gen-key -n client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' --cap mgr 'allow *'```\
+  creating /etc/ceph/ceph.client.admin.keyring\
+7.生成一个引导-osd密钥环，生成一个client.bootstrap-osd用户并将用户添加到密钥环中\
+  ```sudo ceph-authtool --create-keyring /var/lib/ceph/bootstrap-osd/ceph.keyring --gen-key -n client.bootstrap-osd --cap mon 'profile bootstrap-osd'```\
   creating /var/lib/ceph/bootstrap-osd/ceph.keyring
 8.将生成的密钥添加到ceph.mon.keyring
   sudo ceph-authtool /tmp/ceph.mon.keyring --import-keyring /etc/ceph/ceph.client.admin.keyring
