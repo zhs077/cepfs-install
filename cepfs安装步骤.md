@@ -1,6 +1,6 @@
 # 版本jewel,没有采用ceph-deploy 部署，操作系统centos7.2
 ## 前置步骤
-### 1. 安装包部署 ### <br>
+### 1. 安装包部署 <br>
 2. 防火墙关闭，时钟同步 <br>
 3. 创建一个ceph虚拟用户 <br>
   ```echo "ceph:x:167:167:Ceph daemons:/var/lib/ceph:/sbin/nologin" >> /etc/passwd```<br>
@@ -54,7 +54,8 @@
 ### 2.在node2上修改ceph.mon.keyring属主和属组为ceph
  ```chown ceph.ceph /tmp/ceph.mon.keyring``` <br><br>
  ### 3.获取密钥和monmap信息(从mon1机器拷贝过来的秘钥)
- 
+ ceph auth get mon. -o /tmp/ceph.mon.keyring 
+ ceph mon getmap -o /tmp/ceph.mon.map
 
 
   
