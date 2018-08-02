@@ -54,8 +54,8 @@
 ### 2.在node2上修改ceph.mon.keyring属主和属组为ceph
  ```chown ceph.ceph /tmp/ceph.mon.keyring``` <br><br>
  ### 3.获取密钥和monmap信息(从mon1机器拷贝过来的秘钥)
- ceph auth get mon. -o /tmp/ceph.mon.keyring 
- ceph mon getmap -o /tmp/ceph.mon.map
+ ```ceph auth get mon. -o /tmp/ceph.mon.keyring```  <br>
+ ```ceph mon getmap -o /tmp/ceph.mon.map``` <br>
 
 
   
