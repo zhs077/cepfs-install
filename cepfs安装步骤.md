@@ -15,6 +15,7 @@
   4834e3bd-3b59-4536-9465-36f2bd13f68a <br>
 ### 6. ceph.conf <br>
 [global]
+**
 fsid = 08068b52-f0ab-4a50-8dad-cc3512082031
 mon_initial_members = mon1
 mon_host = 221.230.143.143
@@ -37,6 +38,7 @@ osd_mkfs_type = xfs
 max mds = 5
 mds max file size = 100000000000000
 mds cache size = 1000000
+**
 #设置osd节点down后900s，把此osd节点逐出ceph集群，把之前映射到此节点的数据映射到其他节点。
 mon osd down out interval = 900
  ## 部署MON节点(3台机器）
