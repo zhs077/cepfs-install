@@ -49,7 +49,7 @@
 ### 12.第一个算节点部署成功 
 ### 13. /etc/ceph/* 文件拷贝到所有机器 <br>
     /var/lib/ceph/bootstrap-osd/ceph.keyring 拷贝到所有机器（理论上拷贝到osd机器就可以） 
-    /tmp/ceph.mon.keyring 拷贝到所有机器（理论上是mon机器就可以） <br>
+    /tmp/ceph.mon.keyring 拷贝到所有机器（理论上是mon机器就可以） 
     /var/lib/ceph/bootstrap-mds/ceph.keyring 拷贝到所有机器（理论上拷贝到mds机器就可以） 
 ## 新增mon2,mon3节点 <br>
 ### 1.在mon2上创建一个默认的数据目录
