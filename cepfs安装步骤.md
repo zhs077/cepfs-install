@@ -1,11 +1,11 @@
 # 版本jewel,没有采用ceph-deploy 部署，操作系统centos7.2
 ## 前置步骤
-### 1. 安装包部署 <br>
-### 2. 防火墙关闭，时钟同步 <br>
-### 3. 创建一个ceph虚拟用户 <br>
+### 1.安装包部署 
+### 2.防火墙关闭，时钟同步 
+### 3.创建一个ceph虚拟用户 
   ```echo "ceph:x:167:167:Ceph daemons:/var/lib/ceph:/sbin/nologin" >> /etc/passwd```<br>
   ```echo "ceph:x:167:" >>  /etc/group```
-### 4. 机器规划，多少台mon,osd, mds 
+### 4.机器规划，多少台mon,osd, mds 
 ### 5. /etc/hosts 添加以下mon信息
   ```221.230.143.143 mon1```<br>
   ```221.230.143.144 mon2```<br>
@@ -13,9 +13,9 @@
 ### 5. 生成一个uuid <br>
   ```uuidgen``` <br>
   4834e3bd-3b59-4536-9465-36f2bd13f68a <br>
-### 6. ceph.conf <br>
-[global]
+### 6.ceph.conf 
 ```
+[global]
 fsid = 08068b52-f0ab-4a50-8dad-cc3512082031
 mon_initial_members = mon1
 mon_host = 221.230.143.143
@@ -23,7 +23,6 @@ mon_host = 221.230.143.143
 auth_cluster_required = cephx
 auth_service_required = cephx
 auth_client_required = cephx
-
 public_network = 221.230.143.0/24
 mon_clock_drift_allowed = 2
 osd journal size = 1024
@@ -38,9 +37,9 @@ osd_mkfs_type = xfs
 max mds = 5
 mds max file size = 100000000000000
 mds cache size = 1000000
-```
 #设置osd节点down后900s，把此osd节点逐出ceph集群，把之前映射到此节点的数据映射到其他节点。
 mon osd down out interval = 900
+```
  ## 部署MON节点(3台机器）
 ### 1.为监控节点创建管理密钥 <br>
   ```ceph-authtool --create-keyring /tmp/ceph.mon.keyring --gen-key -n mon. --cap mon 'allow *'``` <br>
