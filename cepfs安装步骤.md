@@ -113,7 +113,7 @@ exported keyring for mon.
    和添加第一个osd的方法一样，这里写了个简单的添加脚本，可以通过脚本快速进行一下添加<br>
 ## PG个数的设置
 ### 1.通过ceph -s查看状态
-    **这个时候执行ceps -s 集群状态应该是EALTH_WARN ,too few PGs per OSD**
+    *这个时候执行ceps -s 集群状态应该是EALTH_WARN ,too few PGs per OSD* 
 	PG计算方式
 	total PGs = ((Total_number_of_OSD * 100) / max_replication_count) / pool_count
 
@@ -121,18 +121,33 @@ exported keyring for mon.
 
 	所以PG计算结果为300，一般把这个值设置为与计算结果最接近的2的幂数，跟300比较接近的是256
 ### 2.查看当前的PG值
-  ```ceph osd pool get rbd pg_num```
-	pg_num: 64
-  ```ceph osd pool get rbd pgp_num```
-	pgp_num: 64
+  ```ceph osd pool get rbd pg_num``` <br>
+	pg_num: 64 <br>
+  ```ceph osd pool get rbd pgp_num``` <br>
+	pgp_num: 64 <br>
 ### 3.手动设置
-  ```ceph osd pool set rbd pg_num 256```
-	set pool 0 pg_num to 256
-  ```ceph osd pool set rbd pgp_num 256```
-	set pool 0 pgp_num to 256
+  ```ceph osd pool set rbd pg_num 256``` <br>
+	set pool 0 pg_num to 256 <br>
+  ```ceph osd pool set rbd pgp_num 256``` <br>
+	set pool 0 pgp_num to 256 <br>
 ### 4.再次查看状态
-  ```ceph -s``` 
-  正常集群会显示HEALTH_OK
-
+  ```ceph -s```  <br>
+  正常集群会显示HEALTH_OK<br>
+## 部署MDS
+### 1.为mds元数据服务器创建一个目录
+  ```mkdir -p /var/lib/ceph/mds/ceph-mds1``` <br>
+### 2.确保存在 /var/lib/ceph/bootstrap-mds/ceph.keyring 文件
+### 3.在root家目录里创建ceph.bootstrap-mds.keyring文件
+  ```touch /root/ceph.bootstrap-mds.keyring``` <br>
+### 4. 把keyring /var/lib/ceph/bootstrap-mds/ceph.keyring里的密钥导入家目录下的ceph.bootstrap-mds.keyring文件里
+  ```ceph-authtool --import-keyring /var/lib/ceph/bootstrap-mds/ceph.keyring ceph.bootstrap-mds.keyring```<br>
+	importing contents of /var/lib/ceph/bootstrap-mds/ceph.keyring into ceph.bootstrap-mds.keyring<br>
+### 5. 在ceph auth库中创建mds.mds1用户，并赋予权限和创建密钥，密钥保存在/var/lib/ceph/mds/ceph-mds1/keyring文件里
+  ```ceph --cluster ceph --name client.bootstrap-mds --keyring /var/lib/ceph/bootstrap-mds/ceph.keyring auth get-or-create mds.mds1 osd 'allow rwx' mds 'allow' mon 'allow profile mds' -o /var/lib/ceph/mds/ceph-mds1/keyring``` <br>
+### 6.启动MDS
+  ```systemctl start ceph-mds@mds1```<br>
+  ```systemctl status ceph-mds@mds1```<br>
+### 7.设置mds开机自动启动
+  ```systemctl enable ceph-mds@mds1```<br>
 参考
 https://yq.aliyun.com/articles/604372
