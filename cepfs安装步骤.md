@@ -4,7 +4,7 @@
 ### 2. 防火墙关闭，时钟同步 <br>
 ### 3. 创建一个ceph虚拟用户 <br>
   ```echo "ceph:x:167:167:Ceph daemons:/var/lib/ceph:/sbin/nologin" >> /etc/passwd```<br>
-  ```echo "ceph:x:167:" >>  /etc/group``` <br>
+  ```echo "ceph:x:167:" >>  /etc/group``` 
 ### 4. 生成一个uuid <br>
   ```uuidgen``` <br>
   4834e3bd-3b59-4536-9465-36f2bd13f68a <br>
@@ -75,5 +75,7 @@
   ```systemctl enable ceph-mon@mon2``` <br><br>
 ## mon3节点 <br>
 ### 流程参考mon2，部署完毕后，执行 ceph -s 命令后可以看到有3个mon启动起来
+## 部署OSD
+
 参考
 https://yq.aliyun.com/articles/604372
