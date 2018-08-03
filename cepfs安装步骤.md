@@ -149,5 +149,8 @@ exported keyring for mon.
   ```systemctl status ceph-mds@mds1```<br>
 ### 7.设置mds开机自动启动
   ```systemctl enable ceph-mds@mds1```<br>
+## 部署第二个MDS
+### 1.拷贝密钥文件到mds2
+  ```scp ceph.bootstrap-mds.keyring node2:/root/ceph.bootstrap-mds.keyring```   
 参考
 https://yq.aliyun.com/articles/604372
