@@ -81,8 +81,8 @@ exported keyring for mon.
 ## 部署OSD
 ### 1.创建osd
   ```ceph osd create```<br>
-  注：0位osd的ID号，默认情况下会自动递增<br>
-###2.准备磁盘
+   注：0位osd的ID号，默认情况下会自动递增<br>
+### 2.准备磁盘
 	通过ceph-disk命令可以自动根据ceph.conf文件中的配置信息对磁盘进行分区()<br>
   ```ceph-disk prepare /dev/sdb```<br>
 ### 3.对第一个分区进行格式化
