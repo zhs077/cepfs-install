@@ -83,8 +83,8 @@ exported keyring for mon.
   ```ceph osd create```<br>
    注：0位osd的ID号，默认情况下会自动递增<br>
 ### 2.准备磁盘
-	通过ceph-disk命令可以自动根据ceph.conf文件中的配置信息对磁盘进行分区()<br>
   ```ceph-disk prepare /dev/sdb```<br>
+  通过ceph-disk命令可以自动根据ceph.conf文件中的配置信息对磁盘进行分区()<br>
 ### 3.对第一个分区进行格式化
   ```mkfs.xfs -f /dev/sdb1```<br>
 ### 4.创建osd默认的数据目录
@@ -111,5 +111,8 @@ exported keyring for mon.
   ```ceph osd tree```<br>
 ### 14.添加新的osd
    和添加第一个osd的方法一样，这里写了个简单的添加脚本，可以通过脚本快速进行一下添加<br>
+## PG个数的设置
+    ***这个时候执行ceps -s 集群状态应该是EALTH_WARN ,too few PGs per OSD***
+
 参考
 https://yq.aliyun.com/articles/604372
