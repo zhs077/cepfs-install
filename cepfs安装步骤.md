@@ -166,10 +166,11 @@ exported keyring for mon.
   ```ceph osd pool create cephfs_data 256```<br>
   ```ceph osd pool create cephfs_metadata 256```<br>
   ```ceph fs new cephfs cephfs_metadata cephfs_data```<br>
+  备注：大小和pg大小一致<br>
 ### 2.内核挂载方式
   ```mount -t ceph mon1,mon2,mon3:6789:/  /mnt/cephfs -o name=admin,secret=AQDuGjFabSMHAxAAEbYLDjpa3EQUaSGB/EtkXg==```
 ### 3.ceph挂载方式
   ```  ceph-fuse -m xxxx,yyyy,yyy:6789 /mnt/cephfs```<br>
-  备注：本地机器需要 存在/etc/ceph/ceph.client.admin.keyring
+  备注：本地机器需要 存在/etc/ceph/ceph.client.admin.keyring <br>
   参考
 https://yq.aliyun.com/articles/604372
