@@ -112,7 +112,27 @@ exported keyring for mon.
 ### 14.添加新的osd
    和添加第一个osd的方法一样，这里写了个简单的添加脚本，可以通过脚本快速进行一下添加<br>
 ## PG个数的设置
-    ***这个时候执行ceps -s 集群状态应该是EALTH_WARN ,too few PGs per OSD***
+### 1.通过ceph -s查看状态
+    **这个时候执行ceps -s 集群状态应该是EALTH_WARN ,too few PGs per OSD**
+	PG计算方式
+	total PGs = ((Total_number_of_OSD * 100) / max_replication_count) / pool_count
+
+	当前ceph集群是9个osd，3副本，1个默认的rbd pool
+
+	所以PG计算结果为300，一般把这个值设置为与计算结果最接近的2的幂数，跟300比较接近的是256
+### 2.查看当前的PG值
+  ```ceph osd pool get rbd pg_num```
+	pg_num: 64
+  ```ceph osd pool get rbd pgp_num```
+	pgp_num: 64
+### 3.手动设置
+  ```ceph osd pool set rbd pg_num 256```
+	set pool 0 pg_num to 256
+  ```ceph osd pool set rbd pgp_num 256```
+	set pool 0 pgp_num to 256
+### 4.再次查看状态
+  ```ceph -s``` 
+  正常集群会显示HEALTH_OK
 
 参考
 https://yq.aliyun.com/articles/604372
