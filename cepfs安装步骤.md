@@ -4,16 +4,20 @@
 ### 2. 防火墙关闭，时钟同步 <br>
 ### 3. 创建一个ceph虚拟用户 <br>
   ```echo "ceph:x:167:167:Ceph daemons:/var/lib/ceph:/sbin/nologin" >> /etc/passwd```<br>
-  ```echo "ceph:x:167:" >>  /etc/group``` 
-### 4. 生成一个uuid <br>
+  ```echo "ceph:x:167:" >>  /etc/group```
+### 4. 机器规划，多少台mon,osd, mds 
+### 5. /etc/hosts 添加以下mon信息
+  ```221.230.143.143 mon1```<br>
+  ```221.230.143.144 mon2```<br>
+  ```221.230.143.145 mon3```<br>
+### 5. 生成一个uuid <br>
   ```uuidgen``` <br>
   4834e3bd-3b59-4536-9465-36f2bd13f68a <br>
-### 5. ceph.conf <br>
+### 6. ceph.conf <br>
  ## 部署MON节点(3台机器）
 ### 1.为监控节点创建管理密钥 <br>
   ```ceph-authtool --create-keyring /tmp/ceph.mon.keyring --gen-key -n mon. --cap mon 'allow *'``` <br>
   creating /tmp/ceph.mon.keyring <br>
-  <br>
 ### 2.为ceph amin用户创建管理集群的密钥并赋予访问权限\
   ```sudo ceph-authtool --create-keyring /etc/ceph/ceph.client.admin.keyring --gen-key -n client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' --cap mgr 'allow *'``` <br>
   creating /etc/ceph/ceph.client.admin.keyring <br>
@@ -27,10 +31,9 @@
   importing contents of /var/lib/ceph/bootstrap-osd/ceph.keyring into /tmp/ceph.mon.keyring <br><br>
 ### 5.使用主机名、主机IP地址(ES)和FSID生成monmap。把它保存成/tmp/monmap
   ```monmaptool --create --add mon1 192.168.1.10 --fsid bdfb36e0-23ed-4e2f-8bc6-b98d9fa9136c /tmp/monmap``` <br>
- 
-  monmaptool: monmap file /tmp/monmap <br>
-  monmaptool: set fsid to bdfb36e0-23ed-4e2f-8bc6-b98d9fa9136c <br>
-  monmaptool: writing epoch 0 to /tmp/monmap (1 monitors) <br>
+	monmaptool: monmap file /tmp/monmap <br>
+	monmaptool: set fsid to bdfb36e0-23ed-4e2f-8bc6-b98d9fa9136c <br>
+    monmaptool: writing epoch 0 to /tmp/monmap (1 monitors) <br>
 ### 6.创建一个默认的数据目录 <br>
   ```sudo -u ceph mkdir /var/lib/ceph/mon/ceph-mon1``` <br>
 ### 7. 改ceph.mon.keyring属主和属组为ceph <br>
@@ -55,7 +58,7 @@
  ```chown ceph.ceph /tmp/ceph.mon.keyring``` <br>
 ### 3.获取密钥和monmap信息(从mon1机器拷贝过来的秘钥)
  ```ceph auth get mon. -o /tmp/ceph.mon.keyring```  <br>
-	exported keyring for mon.
+exported keyring for mon.
  ```ceph mon getmap -o /tmp/ceph.mon.map``` <br>
 	got monmap epoch 1
 ### 4.初始化mon
@@ -87,8 +90,7 @@
 ### 4.创建osd默认的数据目录
   ```mkdir -p /var/lib/ceph/osd/ceph-0```<br>
 ### 5.对分区进行挂载
-  ```mount /dev/sdc1 /var/lib/ceph/osd/ceph-0/<br>
-
+  ```mount /dev/sdc1 /var/lib/ceph/osd/ceph-0/ ```<br>
 ### 6.添加自动挂载信息,开启自动挂载
   ```echo "/dev/sdb1 /var/lib/ceph/osd/ceph-1 xfs defaults 0 0" >> /etc/fstab```<br>
 ### 7.初始化 OSD 数据目录
@@ -99,7 +101,7 @@
   ```ceph osd crush add osd.0 1.0 host=node1```<br>
 	 add item id 0 name 'osd.0' weight 1 at location {host=node1} to crush map<br>
 ### 10.修改osd数据目录的属主和属组为ceph
-```chown -R ceph:ceph /var/lib/ceph/osd/ceph-0/```<br>
+  ```chown -R ceph:ceph /var/lib/ceph/osd/ceph-0/```<br>
 ### 11.启动新添加的osd
   ```systemctl start ceph-osd@0```<br>
   ```systemctl status ceph-osd@0```<br>
