@@ -16,10 +16,10 @@
   <br>
 ### 2.为ceph amin用户创建管理集群的密钥并赋予访问权限\
   ```sudo ceph-authtool --create-keyring /etc/ceph/ceph.client.admin.keyring --gen-key -n client.admin --set-uid=0 --cap mon 'allow *' --cap osd 'allow *' --cap mds 'allow *' --cap mgr 'allow *'``` <br>
-  creating /etc/ceph/ceph.client.admin.keyring <br><br>
+  creating /etc/ceph/ceph.client.admin.keyring <br>
 ### 3.生成一个引导-osd密钥环，生成一个client.bootstrap-osd用户并将用户添加到密钥环中 <br>
   ```sudo ceph-authtool --create-keyring /var/lib/ceph/bootstrap-osd/ceph.keyring --gen-key -n client.bootstrap-osd --cap mon 'profile bootstrap-osd'```<br>
-  creating /var/lib/ceph/bootstrap-osd/ceph.keyring <br><br>
+  creating /var/lib/ceph/bootstrap-osd/ceph.keyring <br>
 ### 4.将生成的密钥添加到ceph.mon.keyring <br> 
   ```sudo ceph-authtool /tmp/ceph.mon.keyring --import-keyring /etc/ceph/ceph.client.admin.keyring``` <br>
   importing contents of /etc/ceph/ceph.client.admin.keyring into /tmp/ceph.mon.keyring <br>
@@ -30,29 +30,29 @@
  
   monmaptool: monmap file /tmp/monmap <br>
   monmaptool: set fsid to bdfb36e0-23ed-4e2f-8bc6-b98d9fa9136c <br>
-  monmaptool: writing epoch 0 to /tmp/monmap (1 monitors) <br><br>
+  monmaptool: writing epoch 0 to /tmp/monmap (1 monitors) <br>
 ### 6.创建一个默认的数据目录 <br>
   ```sudo -u ceph mkdir /var/lib/ceph/mon/ceph-mon1``` <br>
 ### 7. 改ceph.mon.keyring属主和属组为ceph <br>
-  ```chown ceph.ceph /tmp/ceph.mon.keyring``` <br><br>
+  ```chown ceph.ceph /tmp/ceph.mon.keyring``` <br>
 ### 8.为了防止重新被安装创建一个空的done文件 <br>
-   ```sudo touch /var/lib/ceph/mon/ceph-mon1/done``` <br><br>
+   ```sudo touch /var/lib/ceph/mon/ceph-mon1/done``` <br>
 ### 9.启动mon
-  ```systemctl start ceph-mon@mon1``` <br><br>
+  ```systemctl start ceph-mon@mon1``` <br>
 ### 10.查看运行状态
-  ```systemctl status ceph-mon@mon1``` <br><br>
+  ```systemctl status ceph-mon@mon1``` <br>
 ### 11. 设置mon开机自动启动 <br>
-  ```systemctl enable ceph-mon@mon1``` <br><br>
+  ```systemctl enable ceph-mon@mon1``` <br>
 ### 12.第一个算节点部署成功 
 ### 13. /etc/ceph/* 文件拷贝到所有机器 <br>
     /var/lib/ceph/bootstrap-osd/ceph.keyring 拷贝到所有机器（理论上拷贝到osd机器就可以） <br>
     /tmp/ceph.mon.keyring 拷贝到所有机器（理论上是mon机器就可以） <br>
-    /var/lib/ceph/bootstrap-mds/ceph.keyring 拷贝到所有机器（理论上拷贝到mds机器就可以） <br><br>
+    /var/lib/ceph/bootstrap-mds/ceph.keyring 拷贝到所有机器（理论上拷贝到mds机器就可以） <br>
 ## 新增mon2,mon3节点 <br>
 ### 1.在mon2上创建一个默认的数据目录
- ```sudo -u ceph mkdir /var/lib/ceph/mon/ceph-mon2``` <br><br>
+ ```sudo -u ceph mkdir /var/lib/ceph/mon/ceph-mon2``` <br>
 ### 2.在mon2上修改ceph.mon.keyring属主和属组为ceph
- ```chown ceph.ceph /tmp/ceph.mon.keyring``` <br><br>
+ ```chown ceph.ceph /tmp/ceph.mon.keyring``` <br>
 ### 3.获取密钥和monmap信息(从mon1机器拷贝过来的秘钥)
  ```ceph auth get mon. -o /tmp/ceph.mon.keyring```  <br>
 	exported keyring for mon.
@@ -68,14 +68,44 @@
 ```ceph mon add mon2 192.168.1.11:6789```<br>
 	adding mon.mon2 at 192.168.1.11:6789/0<br>
 ### 7.启动mon
-  ```systemctl start ceph-mon@mon2``` <br><br>
+  ```systemctl start ceph-mon@mon2``` <br>
 ### 8.查看运行状态
-  ```systemctl status ceph-mon@mon2``` <br><br>
+  ```systemctl status ceph-mon@mon2``` <br>
 ### 9. 设置mon开机自动启动 <br>
-  ```systemctl enable ceph-mon@mon2``` <br><br>
+  ```systemctl enable ceph-mon@mon2``` <br>
 ## mon3节点 <br>
 ### 流程参考mon2，部署完毕后，执行 ceph -s 命令后可以看到有3个mon启动起来
 ## 部署OSD
+### 1.创建osd
+  ```ceph osd create```<br>
+  注：0位osd的ID号，默认情况下会自动递增<br>
+###2.准备磁盘
+	通过ceph-disk命令可以自动根据ceph.conf文件中的配置信息对磁盘进行分区()<br>
+  ```ceph-disk prepare /dev/sdb```<br>
+### 3.对第一个分区进行格式化
+  ```mkfs.xfs -f /dev/sdb1```<br>
+### 4.创建osd默认的数据目录
+  ```mkdir -p /var/lib/ceph/osd/ceph-0```<br>
+### 5.对分区进行挂载
+  ```mount /dev/sdc1 /var/lib/ceph/osd/ceph-0/<br>
 
+### 6.添加自动挂载信息,开启自动挂载
+  ```echo "/dev/sdb1 /var/lib/ceph/osd/ceph-1 xfs defaults 0 0" >> /etc/fstab```<br>
+### 7.初始化 OSD 数据目录
+  ```ceph-osd -i 0 --mkfs --mkkey```<br>
+### 8.添加key
+  ```ceph auth add osd.0 osd 'allow *' mon 'allow profile osd' -i /var/lib/ceph/osd/ceph-0/keyring```<br>
+### 9.把新建的osd添加到crush中
+  ```ceph osd crush add osd.0 1.0 host=node1```<br>
+	 add item id 0 name 'osd.0' weight 1 at location {host=node1} to crush map<br>
+### 10.修改osd数据目录的属主和属组为ceph
+```chown -R ceph:ceph /var/lib/ceph/osd/ceph-0/```<br>
+### 11.启动新添加的osd
+  ```systemctl start ceph-osd@0```<br>
+  ```systemctl status ceph-osd@0```<br>
+### 12.设置osd开机自动启动
+  ```systemctl enable ceph-osd@0```<br>
+### 13.查看ceph osd tree状态
+  ```ceph osd tree```<br>
 参考
 https://yq.aliyun.com/articles/604372
