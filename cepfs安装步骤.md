@@ -109,5 +109,7 @@ exported keyring for mon.
   ```systemctl enable ceph-osd@0```<br>
 ### 13.查看ceph osd tree状态
   ```ceph osd tree```<br>
+### 14.添加新的osd
+   和添加第一个osd的方法一样，这里写了个简单的添加脚本，可以通过脚本快速进行一下添加<br>
 参考
 https://yq.aliyun.com/articles/604372
