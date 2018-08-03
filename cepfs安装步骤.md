@@ -151,6 +151,25 @@ exported keyring for mon.
   ```systemctl enable ceph-mds@mds1```<br>
 ## 部署第二个MDS
 ### 1.拷贝密钥文件到mds2
-  ```scp ceph.bootstrap-mds.keyring node2:/root/ceph.bootstrap-mds.keyring```   
-参考
+  ```scp ceph.bootstrap-mds.keyring mds2:/root/ceph.bootstrap-mds.keyring``` <br>  
+### 2.在mds2上创建mds元数据目录
+  ```mkdir -p /var/lib/ceph/mds/ceph-mds2```
+### 3.在ceph auth库中创建mds.mds2用户，并赋予权限和创建密钥，密钥保存在/var/lib/ceph/mds/ceph-mds2/keyring文件里
+  ```ceph --cluster ceph --name client.bootstrap-mds --keyring /var/lib/ceph/bootstrap-mds/ceph.keyring auth get-or-create mds.mds2 osd 'allow rwx' mds 'allow' mon 'allow profile mds' -o /var/lib/ceph/mds/ceph-mds2/keyring``` <br> 
+### 4.启动MDS
+  ```systemctl start ceph-mds@mds2```<br>
+  ```systemctl status ceph-mds@mds2```<br>
+### 5.设置mds开机自动启动
+  ```systemctl enable ceph-mds@mds2```<br>
+## 挂载文件系统
+### 1.创建文件系统用到的pool
+  ```ceph osd pool create cephfs_data 256```<br>
+  ```ceph osd pool create cephfs_metadata 256```<br>
+  ```ceph fs new cephfs cephfs_metadata cephfs_data```<br>
+### 2.内核挂载方式
+  ```mount -t ceph mon1,mon2,mon3:6789:/  /mnt/cephfs -o name=admin,secret=AQDuGjFabSMHAxAAEbYLDjpa3EQUaSGB/EtkXg==```
+### 3.ceph挂载方式
+  ```  ceph-fuse -m xxxx,yyyy,yyy:6789 /mnt/cephfs```<br>
+  备注：本地机器需要 存在/etc/ceph/ceph.client.admin.keyring
+  参考
 https://yq.aliyun.com/articles/604372
