@@ -25,4 +25,9 @@ rm -rf /var/lib/ceph/tmp/*
 rm -rf /etc/ceph/*
 rm -rf /var/run/ceph/* 
 
-## /var/lib/ceph/mon/ceph-mon1' already exists and is not empty: monitor may already exist
+sudo -u ceph ceph-mon --mkfs -i mon1 --monmap /tmp/monmap --keyring /tmp/ceph.mon.keyring  
+/var/lib/ceph/mon/ceph-mon1' already exists and is not empty: monitor may already exist
+
+解决
+rm -fr /var/lib/ceph/mon/ceph-node1/
+ 
