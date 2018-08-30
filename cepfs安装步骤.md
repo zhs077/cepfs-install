@@ -65,7 +65,7 @@ mon osd down out interval = 900
 ### 7. 改ceph.mon.keyring属主和属组为ceph <br>
   ```chown ceph.ceph /tmp/ceph.mon.keyring``` <br>
 ### 8. 初始化mon
-   ```sudo -u ceph ceph-mon --mkfs -i node1 --monmap /tmp/monmap --keyring /tmp/ceph.mon.keyring``` <br>
+   ```sudo -u ceph ceph-mon --mkfs -i mon1 --monmap /tmp/monmap --keyring /tmp/ceph.mon.keyring``` <br>
    	ceph-mon: set fsid to bdfb36e0-23ed-4e2f-8bc6-b98d9fa9136c <br>
 	ceph-mon: created monfs at /var/lib/ceph/mon/ceph-node1 for mon.node1 <br>
 ### 8.为了防止重新被安装创建一个空的done文件 <br>
