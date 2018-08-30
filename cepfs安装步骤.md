@@ -18,12 +18,12 @@
 [global]
 fsid = 08068b52-f0ab-4a50-8dad-cc3512082031
 mon_initial_members = mon1
-mon_host = 221.230.143.143
+mon_host =xxxxxx
 
 auth_cluster_required = cephx
 auth_service_required = cephx
 auth_client_required = cephx
-public_network = 221.230.143.0/24
+public_network = xxxx.0/24
 mon_clock_drift_allowed = 2
 osd journal size = 1024
 #设置副本数
