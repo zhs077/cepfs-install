@@ -9,3 +9,18 @@
 ```建议使用ceph-fuse方式来挂载，操作系统自带的fuse版本会比较低，稳定性会差点```\
 1.内核挂载 ```mount -t ceph 192.168.159.131:6789:/  /mnt/cephfs -o name=admin,secret=AQDuGjFabSMHAxAAEbYLDjpa3EQUaSGB/EtkXg== ```\
 2.ceph-fuse 挂载（本地需要有 /etc/ceph/ceph.client.admin.keyring ） ```ceph-fuse -m  xxxx,yyyy,yyy:6789 /mnt/cephfs```  \
+
+## 清理
+```ps aux|grep ceph |awk '{print $2}'|xargs kill -9
+ps -ef|grep ceph
+#确保此时所有ceph进程都已经关闭！！！如果没有关闭，多执行几次。
+umount /var/lib/ceph/osd/*
+rm -rf /var/lib/ceph/osd/*
+rm -rf /var/lib/ceph/mon/*
+rm -rf /var/lib/ceph/mds/*
+rm -rf /var/lib/ceph/bootstrap-mds/*
+rm -rf /var/lib/ceph/bootstrap-osd/*
+rm -rf /var/lib/ceph/bootstrap-rgw/*
+rm -rf /var/lib/ceph/tmp/*
+rm -rf /etc/ceph/*
+rm -rf /var/run/ceph/* ```
