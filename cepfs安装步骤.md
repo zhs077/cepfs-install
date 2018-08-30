@@ -56,7 +56,7 @@ mon osd down out interval = 900
   ```sudo ceph-authtool /tmp/ceph.mon.keyring --import-keyring /var/lib/ceph/bootstrap-osd/ceph.keyring``` <br>
   importing contents of /var/lib/ceph/bootstrap-osd/ceph.keyring into /tmp/ceph.mon.keyring <br><br>
 ### 5.使用主机名、主机IP地址(ES)和FSID生成monmap。把它保存成/tmp/monmap
-  ```monmaptool --create --add mon1 192.168.1.10 --fsid bdfb36e0-23ed-4e2f-8bc6-b98d9fa9136c /tmp/monmap``` <br>
+  ```monmaptool --create --add mon1 192.168.1.10 --fsid bdfb36e0-23ed-4e2f-8bc6-b98d9fa9136c /tmp/monmap --clobber ``` <br>
 	monmaptool: monmap file /tmp/monmap <br>
 	monmaptool: set fsid to bdfb36e0-23ed-4e2f-8bc6-b98d9fa9136c <br>
     monmaptool: writing epoch 0 to /tmp/monmap (1 monitors) <br>
