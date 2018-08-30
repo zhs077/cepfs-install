@@ -24,3 +24,5 @@ rm -rf /var/lib/ceph/bootstrap-rgw/*
 rm -rf /var/lib/ceph/tmp/*
 rm -rf /etc/ceph/*
 rm -rf /var/run/ceph/* ```
+
+## /var/lib/ceph/mon/ceph-mon1' already exists and is not empty: monitor may already exist
