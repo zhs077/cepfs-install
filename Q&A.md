@@ -26,11 +26,11 @@
  rm -rf /etc/ceph/*
  rm -rf /var/run/ceph/* 
 ```
-##创建mon失败
+
+## 创建mon失败
 ```
 sudo -u ceph ceph-mon --mkfs -i mon1 --monmap /tmp/monmap --keyring /tmp/ceph.mon.keyring  
 /var/lib/ceph/mon/ceph-mon1' already exists and is not empty: monitor may already exist
-
 解决：
 rm -fr /var/lib/ceph/mon/ceph-node1/
  ```
