@@ -35,6 +35,6 @@ sudo -u ceph ceph-mon --mkfs -i mon1 --monmap /tmp/monmap --keyring /tmp/ceph.mo
 rm -fr /var/lib/ceph/mon/ceph-node1/
  ```
  ##常用命令
- ### 查看osd 属于哪台机器
+ ### 1.查看osd 属于哪台机器
   ```ceph osd find 0```
  
