@@ -114,14 +114,14 @@ exported keyring for mon.
   ```ceph osd create```<br>
    注：0位osd的ID号，默认情况下会自动递增<br>
 ### 2.准备磁盘
-  ```ceph-disk prepare /dev/sdb```<br>
+  ```ceph-disk prepare /dev/sdb1```<br>
   通过ceph-disk命令可以自动根据ceph.conf文件中的配置信息对磁盘进行分区()<br>
 ### 3.对第一个分区进行格式化
   ```mkfs.xfs -f /dev/sdb1```<br>
 ### 4.创建osd默认的数据目录
   ```mkdir -p /var/lib/ceph/osd/ceph-0```<br>
 ### 5.对分区进行挂载
-  ```mount /dev/sdc1 /var/lib/ceph/osd/ceph-0/ ```<br>
+  ```mount /dev/sdb1 /var/lib/ceph/osd/ceph-0/ ```<br>
 ### 6.添加自动挂载信息,开启自动挂载
   ```echo "/dev/sdb1 /var/lib/ceph/osd/ceph-1 xfs defaults 0 0" >> /etc/fstab```<br>
 ### 7.初始化 OSD 数据目录
