@@ -11,19 +11,19 @@
 2.ceph-fuse 挂载（本地需要有 /etc/ceph/ceph.client.admin.keyring ） ```ceph-fuse -m  xxxx,yyyy,yyy:6789 /mnt/cephfs```  \
 
 ## 清理
-ps aux|grep ceph |awk '{print $2}'|xargs kill -9
-ps -ef|grep ceph
-#确保此时所有ceph进程都已经关闭！！！如果没有关闭，多执行几次。
-umount /var/lib/ceph/osd/*
-rm -rf /var/lib/ceph/osd/*
-rm -rf /var/lib/ceph/mon/*
-rm -rf /var/lib/ceph/mds/*
-rm -rf /var/lib/ceph/bootstrap-mds/*
-rm -rf /var/lib/ceph/bootstrap-osd/*
-rm -rf /var/lib/ceph/bootstrap-rgw/*
-rm -rf /var/lib/ceph/tmp/*
-rm -rf /etc/ceph/*
-rm -rf /var/run/ceph/* 
+  ps aux|grep ceph |awk '{print $2}'|xargs kill -9
+  ps -ef|grep ceph
+ #确保此时所有ceph进程都已经关闭！！！如果没有关闭，多执行几次。
+ umount /var/lib/ceph/osd/*
+ rm -rf /var/lib/ceph/osd/*
+ rm -rf /var/lib/ceph/mon/*
+ rm -rf /var/lib/ceph/mds/*
+ rm -rf /var/lib/ceph/bootstrap-mds/*
+ rm -rf /var/lib/ceph/bootstrap-osd/*
+ rm -rf /var/lib/ceph/bootstrap-rgw/*
+ rm -rf /var/lib/ceph/tmp/*
+ rm -rf /etc/ceph/*
+ rm -rf /var/run/ceph/* 
 
 sudo -u ceph ceph-mon --mkfs -i mon1 --monmap /tmp/monmap --keyring /tmp/ceph.mon.keyring  
 /var/lib/ceph/mon/ceph-mon1' already exists and is not empty: monitor may already exist
