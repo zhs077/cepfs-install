@@ -26,9 +26,15 @@
  rm -rf /etc/ceph/*
  rm -rf /var/run/ceph/* 
 ```
+##创建mon失败
+```
 sudo -u ceph ceph-mon --mkfs -i mon1 --monmap /tmp/monmap --keyring /tmp/ceph.mon.keyring  
 /var/lib/ceph/mon/ceph-mon1' already exists and is not empty: monitor may already exist
 
-解决
+解决：
 rm -fr /var/lib/ceph/mon/ceph-node1/
+ ```
+ ##常用命令
+ ### 查看osd 属于哪台机器
+  ```ceph osd find 0```
  
