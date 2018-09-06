@@ -7,9 +7,9 @@
   ```echo "ceph:x:167:" >>  /etc/group```
 ### 4.机器规划，多少台mon,osd, mds 
 ### 5. /etc/hosts 添加以下mon信息
-  ```221.230.143.143 mon1```<br>
-  ```221.230.143.144 mon2```<br>
-  ```221.230.143.145 mon3```<br>
+  ```xx.xxx.143.xxx mon1```<br>
+  ```xxx.230.xxx.xxx mon2```<br>
+  ```xxx.230.xxx.xxx mon3```<br>
 ### 5. 生成一个uuid <br>
   ```uuidgen``` <br>
   4834e3bd-3b59-4536-9465-36f2bd13f68a <br>
