@@ -45,4 +45,10 @@ rm -fr /var/lib/ceph/mon/ceph-node1/
   
   ceph osd create
   ceph osd crush add osd.2 1.0 host=mon1
+  
+  
+  ceph osd pool get rbd size
+ceph osd pool set <poolname> size 2
+ceph osd pool set <poolname> min_size 1
+ceph osd pool set <poolname> max_size 10
  
