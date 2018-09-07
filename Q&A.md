@@ -57,10 +57,6 @@ Sep  6 21:30:56 ceph-create-keys: INFO:ceph-create-keys:ceph-mon admin socket no
 
 关闭selinux&firewalld
 
-1
-2
-3
-4
 *sed -i 's/SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 setenforce 0
 systemctl stop firewalld 
