@@ -42,6 +42,7 @@ rm -fr /var/lib/ceph/mon/ceph-node1/
   ceph osd crush remove osd.2
    ceph auth del osd.2
    ceph osd rm 2
+  systemctl stop ceph-osd@0
   
   ceph osd create
   ceph osd crush add osd.2 1.0 host=mon1
