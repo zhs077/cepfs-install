@@ -64,4 +64,5 @@ systemctl stop firewalld
 systemctl disable firewalld
 
 
- 
+ ### 查看某个文件落在哪个PG和OSD
+ ceph osd  map  rbd 1.txt
