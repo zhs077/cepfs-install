@@ -67,3 +67,8 @@ systemctl disable firewalld
  ### 查看某个文件落在哪个PG和OSD
  ceph osd  map  rbd 1.txt <br>
  ll /var/lib/ceph/osd/ceph-3/current/0.29_head/
+ 
+ ###磁盘故障恢复方法
+ 当一个 OSD 被 out 后，部分 PG 限于 active+remapped 状态是经常出现的。解决办法是先运行 ceph osd in {osd-num} 将集群状态恢复到初始状态，然后运行 ceph osd crush reweight osd.{osd-num} 0 来将这个 osd 的 crush weight 修改为 0，然后集群会开始数据迁移。对小集群来说，reweight 命令甚至更好些。
+ 等集群迁移完毕后，在将这个osd删除掉
+ 
