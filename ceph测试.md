@@ -110,4 +110,25 @@ osdmap e98 pool 'rbd' (0) object '1.txt' -> pg 0.e0e3a40b (0.b) -> up ([], p-1) 
                   11 stale+active+clean
  ```
 
- * 集群状态出现 **recovery 11/46 objects degraded**
+ * 集群状态出现 **recovery 11/46 objects degraded**，说明集群正在恢复当中
+ * 这时候文件可以正常读写
+ * 1.txt osd已经由之前的osd.4转义到osd.3
+ ```
+ [root@hostname cephfs]# ceph osd map rbd 1.txt
+osdmap e101 pool 'rbd' (0) object '1.txt' -> pg 0.e0e3a40b (0.b) -> up ([3], p3) acting ([3], p3)
+```
+* 虽然整个集群可以正常读写，但是ceps -s 还是提示错误，原因在于
+```
+HEALTH_ERR 11 pgs are stuck inactive for more than 300 seconds; 11 pgs stale; 11 pgs stuck stale
+pg 0.d is stuck stale for 1322.607389, current state stale+active+clean, last acting [4]
+pg 0.38 is stuck stale for 1322.607469, current state stale+active+clean, last acting [4]
+pg 0.2b is stuck stale for 1322.607458, current state stale+active+clean, last acting [4]
+pg 0.15 is stuck stale for 1322.607449, current state stale+active+clean, last acting [4]
+pg 0.6 is stuck stale for 1322.607415, current state stale+active+clean, last acting [4]
+pg 0.27 is stuck stale for 1322.607462, current state stale+active+clean, last acting [4]
+pg 0.10 is stuck stale for 1322.607454, current state stale+active+clean, last acting [4]
+pg 0.1b is stuck stale for 1322.607443, current state stale+active+clean, last acting [4]
+pg 0.0 is stuck stale for 1322.607457, current state stale+active+clean, last acting [4]
+pg 0.b is stuck stale for 1322.607427, current state stale+active+clean, last acting [4]
+pg 0.3a is stuck stale for 1322.607444, current state stale+active+clean, last acting [4]
+```
