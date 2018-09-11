@@ -5,7 +5,7 @@
 [root@hostname ~]# ceph -s
     cluster 08068b52-f0ab-4a50-8dad-cc3512082031
      health HEALTH_OK
-     monmap e1: 1 mons at {mon1=221.230.143.150:6789/0}
+     monmap e1: 1 mons at {mon1=xxxxxx:6789/0}
             election epoch 4, quorum 0 mon1
       fsmap e8: 1/1/1 up {0=mds1=up:active}
      osdmap e95: 5 osds: 5 up, 5 in
@@ -48,7 +48,7 @@ osdmap e95 pool 'rbd' (0) object '1.txt' -> pg 0.e0e3a40b (0.b) -> up ([4], p4) 
             161 pgs undersized
             recovery 5/46 objects degraded (10.870%)
             1/5 in osds are down
-     monmap e1: 1 mons at {mon1=221.230.143.150:6789/0}
+     monmap e1: 1 mons at {mon1=xxxxxx:6789/0}
             election epoch 4, quorum 0 mon1
       fsmap e8: 1/1/1 up {0=mds1=up:active}
      osdmap e98: 5 osds: 4 up, 5 in; 208 remapped pgs
@@ -97,7 +97,7 @@ osdmap e98 pool 'rbd' (0) object '1.txt' -> pg 0.e0e3a40b (0.b) -> up ([], p-1) 
             8 requests are blocked > 32 sec
             recovery 11/46 objects degraded (23.913%)
             1/5 in osds are down
-     monmap e1: 1 mons at {mon1=221.230.143.150:6789/0}
+     monmap e1: 1 mons at {mon1=xxxxxx:6789/0}
             election epoch 4, quorum 0 mon1
       fsmap e8: 1/1/1 up {0=mds1=up:active}
      osdmap e98: 5 osds: 4 up, 5 in; 208 remapped pgs
@@ -138,7 +138,7 @@ systemctl  start ceph-osd@4
 [root@hostname cephfs]# ceph -s
     cluster 08068b52-f0ab-4a50-8dad-cc3512082031
      health HEALTH_OK
-     monmap e1: 1 mons at {mon1=221.230.143.150:6789/0}
+     monmap e1: 1 mons at {mon1=xxxxxx:6789/0}
             election epoch 4, quorum 0 mon1
       fsmap e8: 1/1/1 up {0=mds1=up:active}
      osdmap e104: 5 osds: 5 up, 5 in
@@ -161,7 +161,7 @@ ceph osd out 4
 [root@hostname cephfs]# ceph -s
     cluster 08068b52-f0ab-4a50-8dad-cc3512082031
      health HEALTH_OK
-     monmap e1: 1 mons at {mon1=221.230.143.150:6789/0}
+     monmap e1: 1 mons at {mon1=xxxxxx:6789/0}
             election epoch 4, quorum 0 mon1
       fsmap e8: 1/1/1 up {0=mds1=up:active}
      osdmap e109: 5 osds: 4 up, 4 in
