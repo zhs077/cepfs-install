@@ -82,6 +82,7 @@ osdmap e98 pool 'rbd' (0) object '1.txt' -> pg 0.e0e3a40b (0.b) -> up ([], p-1) 
 c^H^H
 ```
 * 过几分钟后集群会自动修复，我们看下修复后的状态
+```
 [root@hostname ~]# ceph -s
     cluster 08068b52-f0ab-4a50-8dad-cc3512082031
      health HEALTH_ERR
@@ -105,4 +106,4 @@ c^H^H
                  357 active+clean
                  208 undersized+degraded+peered
                   11 stale+active+clean
-
+```
