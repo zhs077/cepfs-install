@@ -29,25 +29,24 @@
 
 ## 创建mon失败
 ```
-sudo -u ceph ceph-mon --mkfs -i mon1 --monmap /tmp/monmap --keyring /tmp/ceph.mon.keyring  
-/var/lib/ceph/mon/ceph-mon1' already exists and is not empty: monitor may already exist
-解决：
-rm -fr /var/lib/ceph/mon/ceph-node1/
+ sudo -u ceph ceph-mon --mkfs -i mon1 --monmap /tmp/monmap --keyring /tmp/ceph.mon.keyring  
+ /var/lib/ceph/mon/ceph-mon1' already exists and is not empty: monitor may already exist
+  解决：
+ rm -fr /var/lib/ceph/mon/ceph-node1/
  ```
  ##常用命令
  * 1.查看osd 属于哪台机器 <br>
   ```ceph osd find 0```
   * 删除osd
-   ceph osd out osd.2
+  ```
+  ceph osd out osd.2
   ceph osd crush remove osd.2
-   ceph auth del osd.2
-   ceph osd rm 2
+  ceph auth del osd.2
+  ceph osd rm 2
   systemctl stop ceph-osd@0
+  ```
   
-  ceph osd create
-  ceph osd crush add osd.2 1.0 host=mon1
-  
-  
+
   ceph osd pool get rbd size
 ceph osd pool set <poolname> size 2
 ceph osd pool set <poolname> min_size 1
