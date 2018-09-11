@@ -155,6 +155,9 @@ ceph osd crush reweight osd.4 0
 ```
 systemctl  stop ceph-osd@4
 ceph osd out 4
+```
+* 集群的状态健康
+```
 [root@hostname cephfs]# ceph -s
     cluster 08068b52-f0ab-4a50-8dad-cc3512082031
      health HEALTH_OK
