@@ -12,8 +12,8 @@
 
 ## 清理
  ```
-  ps aux|grep ceph |awk '{print $2}'|xargs kill -9
-  ps -ef|grep ceph
+ ps aux|grep ceph |awk '{print $2}'|xargs kill -9
+ ps -ef|grep ceph
  #确保此时所有ceph进程都已经关闭！！！如果没有关闭，多执行几次。
  umount /var/lib/ceph/osd/*
  rm -rf /var/lib/ceph/osd/*
@@ -47,8 +47,9 @@
   ```
  * 4.查看某个文件落在哪个PG和OSD
  ```
- ceph osd  map  rbd 1.txt 
- ll /var/lib/ceph/osd/ceph-3/current/0.29_head/
+ ceph osd  map  rbd 1.txt
+ osdmap e33 pool 'rbd' (0) object '2.txt' -> pg 0.5a885de9 (0.29) -> up ([3,1], p3) acting ([3,1], p3)
+ 
  ```
  ## 遇到的问题
  ### 创建mon失败
