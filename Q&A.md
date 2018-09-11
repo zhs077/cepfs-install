@@ -6,7 +6,7 @@
 4.```ceph fs rm cephfs --yes-i-really-mean-it``` \
 5.```ceph osd pool delete metadata metadata --yes-i-really-really-mean-it``` \
 ## cephfs挂载
-```建议使用ceph-fuse方式来挂载，操作系统自带的fuse版本会比较低，稳定性会差点```\
+
 1.内核挂载 ```mount -t ceph 192.168.159.131:6789:/  /mnt/cephfs -o name=admin,secret=AQDuGjFabSMHAxAAEbYLDjpa3EQUaSGB/EtkXg== ```\
 2.ceph-fuse 挂载（本地需要有 /etc/ceph/ceph.client.admin.keyring ） ```ceph-fuse -m  xxxx,yyyy,yyy:6789 /mnt/cephfs```  \
 
@@ -26,14 +26,6 @@
  rm -rf /etc/ceph/*
  rm -rf /var/run/ceph/* 
 ```
-
-## 创建mon失败
-```
- sudo -u ceph ceph-mon --mkfs -i mon1 --monmap /tmp/monmap --keyring /tmp/ceph.mon.keyring  
- /var/lib/ceph/mon/ceph-mon1' already exists and is not empty: monitor may already exist
-  解决：
- rm -fr /var/lib/ceph/mon/ceph-node1/
- ```
  ## 常用命令
   * 1.查看osd 属于哪台机器 <br>
   ```ceph osd find 0```
@@ -58,17 +50,28 @@
  ceph osd  map  rbd 1.txt 
  ll /var/lib/ceph/osd/ceph-3/current/0.29_head/
  ```
- 
- ###磁盘故障恢复方法
- 当一个 OSD 被 out 后，部分 PG 限于 active+remapped 状态是经常出现的。解决办法是先运行 ceph osd in {osd-num} 将集群状态恢复到初始状态，然后运行 ceph osd crush reweight osd.{osd-num} 0 来将这个 osd 的 crush weight 修改为 0，然后集群会开始数据迁移。对小集群来说，reweight 命令甚至更好些。
- 等集群迁移完毕后，在将这个osd删除掉
-  
+ ## 遇到的问题
+ ### 创建mon失败
+```
+ sudo -u ceph ceph-mon --mkfs -i mon1 --monmap /tmp/monmap --keyring /tmp/ceph.mon.keyring  
+ /var/lib/ceph/mon/ceph-mon1' already exists and is not empty: monitor may already exist
+  解决：
+ rm -fr /var/lib/ceph/mon/ceph-node1/
+ ```
+ ### 启动mon报错
+ ```
  Sep  6 21:30:56 ceph-create-keys: admin_socket: exception getting command descriptions: [Errno 2] No such file or directory
-Sep  6 21:30:56 ceph-create-keys: INFO:ceph-create-keys:ceph-mon admin socket not ready yet.
-
+ Sep  6 21:30:56 ceph-create-keys: INFO:ceph-create-keys:ceph-mon admin socket not ready yet.
+```
 关闭selinux&firewalld
 
 *sed -i 's/SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
 setenforce 0
 systemctl stop firewalld 
 systemctl disable firewalld
+ 
+ ###磁盘故障恢复方法
+ 当一个 OSD 被 out 后，部分 PG 限于 active+remapped 状态是经常出现的。解决办法是先运行 ceph osd in {osd-num} 将集群状态恢复到初始状态，然后运行 ceph osd crush reweight osd.{osd-num} 0 来将这个 osd 的 crush weight 修改为 0，然后集群会开始数据迁移。对小集群来说，reweight 命令甚至更好些。
+ 等集群迁移完毕后，在将这个osd删除掉
+  
+
