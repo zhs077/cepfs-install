@@ -81,3 +81,28 @@ osdmap e98 pool 'rbd' (0) object '1.txt' -> pg 0.e0e3a40b (0.b) -> up ([], p-1) 
 [root@hostname cephfs]# touch 4.txt
 c^H^H
 ```
+* 过几分钟后集群会自动修复，我们看下修复后的状态
+[root@hostname ~]# ceph -s
+    cluster 08068b52-f0ab-4a50-8dad-cc3512082031
+     health HEALTH_ERR
+            208 pgs are stuck inactive for more than 300 seconds
+            208 pgs degraded
+            11 pgs stale
+            208 pgs stuck inactive
+            208 pgs stuck unclean
+            208 pgs undersized
+            8 requests are blocked > 32 sec
+            ** recovery 11/46 objects degraded (23.913%) **
+            1/5 in osds are down
+     monmap e1: 1 mons at {mon1=221.230.143.150:6789/0}
+            election epoch 4, quorum 0 mon1
+      fsmap e8: 1/1/1 up {0=mds1=up:active}
+     osdmap e98: 5 osds: 4 up, 5 in; 208 remapped pgs
+            flags sortbitwise,require_jewel_osds
+      pgmap v52162: 576 pgs, 3 pools, 23083 bytes data, 23 objects
+            5312 MB used, 18608 GB / 18613 GB avail
+            11/46 objects degraded (23.913%)
+                 357 active+clean
+                 208 undersized+degraded+peered
+                  11 stale+active+clean
+
