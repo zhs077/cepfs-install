@@ -63,7 +63,9 @@ osdmap e95 pool 'rbd' (0) object '1.txt' -> pg 0.e0e3a40b (0.b) -> up ([4], p4) 
 ```
 [root@hostname cephfs]# ceph osd map rbd 1.txt
 osdmap e98 pool 'rbd' (0) object '1.txt' -> pg 0.e0e3a40b (0.b) -> up ([], p-1) acting ([], p-1)
-
+```
 文件的读取和写入会卡主
+```
 [root@hostname cephfs]# touch 4.txt
 c^H^H
+```
