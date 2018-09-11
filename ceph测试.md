@@ -61,6 +61,18 @@ osdmap e95 pool 'rbd' (0) object '1.txt' -> pg 0.e0e3a40b (0.b) -> up ([4], p4) 
                   47 peering
                   11 stale+active+clean
 ```
+```
+[root@hostname ~]# ceph osd tree
+ID WEIGHT  TYPE NAME         UP/DOWN REWEIGHT PRIMARY-AFFINITY 
+-2       0 host mon1                                           
+-1 5.00000 root default                                        
+-3 5.00000     host hostname                                   
+ 0 1.00000         osd.0          up  1.00000          1.00000 
+ 1 1.00000         osd.1          up  1.00000          1.00000 
+ 2 1.00000         osd.2          up  1.00000          1.00000 
+ 3 1.00000         osd.3          up  1.00000          1.00000 
+ 4 1.00000         osd.4        down  1.00000          1.00000 
+```
 [root@hostname cephfs]# ceph osd map rbd 1.txt
 osdmap e98 pool 'rbd' (0) object '1.txt' -> pg 0.e0e3a40b (0.b) -> up ([], p-1) acting ([], p-1)
 ```
