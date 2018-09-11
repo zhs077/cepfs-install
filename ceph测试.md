@@ -93,11 +93,8 @@ c^H^H
             208 pgs stuck inactive
             208 pgs stuck unclean
             208 pgs undersized
-            8 requests are blocked > 32 sec
-            ```
-            
+            8 requests are blocked > 32 sec    
             recovery 11/46 objects degraded (23.913%)
-            ```
             1/5 in osds are down
      monmap e1: 1 mons at {mon1=221.230.143.150:6789/0}
             election epoch 4, quorum 0 mon1
@@ -111,3 +108,4 @@ c^H^H
                  208 undersized+degraded+peered
                   11 stale+active+clean
 ```
+多了  recovery 11/46 objects degraded
