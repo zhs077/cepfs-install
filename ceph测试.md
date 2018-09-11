@@ -132,3 +132,35 @@ pg 0.0 is stuck stale for 1322.607457, current state stale+active+clean, last ac
 pg 0.b is stuck stale for 1322.607427, current state stale+active+clean, last acting [4]
 pg 0.3a is stuck stale for 1322.607444, current state stale+active+clean, last acting [4]
 ```
+* 这边的修复方法是把这个OSD 重新挂载回去，然后修改权重为0，在剔除 
+`systemctl  start ceph-osd@4`
+```
+[root@hostname cephfs]# ceph -s
+    cluster 08068b52-f0ab-4a50-8dad-cc3512082031
+     health HEALTH_OK
+     monmap e1: 1 mons at {mon1=221.230.143.150:6789/0}
+            election epoch 4, quorum 0 mon1
+      fsmap e8: 1/1/1 up {0=mds1=up:active}
+     osdmap e104: 5 osds: 5 up, 5 in
+            flags sortbitwise,require_jewel_osds
+      pgmap v52200: 576 pgs, 3 pools, 35121 bytes data, 23 objects
+            5317 MB used, 18608 GB / 18613 GB avail
+                 576 active+clean
+```
+* 调整权重为0 
+ceph osd crush reweight osd.4 0
+* 删除
+`systemctl  stop ceph-osd@4`
+`ceph osd out 4`
+```[root@hostname cephfs]# ceph -s
+    cluster 08068b52-f0ab-4a50-8dad-cc3512082031
+     health HEALTH_OK
+     monmap e1: 1 mons at {mon1=221.230.143.150:6789/0}
+            election epoch 4, quorum 0 mon1
+      fsmap e8: 1/1/1 up {0=mds1=up:active}
+     osdmap e109: 5 osds: 4 up, 4 in
+            flags sortbitwise,require_jewel_osds
+      pgmap v52229: 576 pgs, 3 pools, 35121 bytes data, 23 objects
+            4259 MB used, 14886 GB / 14890 GB avail
+                 576 active+clean
+```
