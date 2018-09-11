@@ -132,7 +132,7 @@ pg 0.0 is stuck stale for 1322.607457, current state stale+active+clean, last ac
 pg 0.b is stuck stale for 1322.607427, current state stale+active+clean, last acting [4]
 pg 0.3a is stuck stale for 1322.607444, current state stale+active+clean, last acting [4]
 ```
-* 这边的修复方法是把这个OSD 重新挂载回去，然后修改权重为0，在剔除 
+* 这边的修复方法是把这个OSD 重新挂载回去，然后修改权重为0，在剔除 (是否有其他的方式？例如删除掉这些PG)
 ```
 systemctl  start ceph-osd@4
 [root@hostname cephfs]# ceph -s
