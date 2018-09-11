@@ -16,6 +16,7 @@
 ```
 * ceph osd tree
 ```
+[root@hostname ~]# ceph -sceph osd tree
 ID WEIGHT  TYPE NAME         UP/DOWN REWEIGHT PRIMARY-AFFINITY 
 -2       0 host mon1                                           
 -1 4.00000 root default                                        
@@ -32,3 +33,4 @@ ID WEIGHT  TYPE NAME         UP/DOWN REWEIGHT PRIMARY-AFFINITY
 [root@hostname cephfs]# ceph osd map rbd 1.txt
 osdmap e95 pool 'rbd' (0) object '1.txt' -> pg 0.e0e3a40b (0.b) -> up ([4], p4) acting ([4], p4)
 ```
+* 停掉osd4
