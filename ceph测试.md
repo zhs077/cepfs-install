@@ -1,6 +1,6 @@
 
 ## 单副本情况,故障域OSD
-* ceph -s
+* 搭建好集群
 ```
 [root@hostname ~]# ceph -s
     cluster 08068b52-f0ab-4a50-8dad-cc3512082031
