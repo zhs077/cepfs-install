@@ -93,6 +93,7 @@ c^H^H
             208 pgs stuck unclean
             208 pgs undersized
             8 requests are blocked > 32 sec```
+            
             `recovery 11/46 objects degraded (23.913%)`
             ```
             1/5 in osds are down
