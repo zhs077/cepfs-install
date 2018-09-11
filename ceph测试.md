@@ -133,8 +133,8 @@ pg 0.b is stuck stale for 1322.607427, current state stale+active+clean, last ac
 pg 0.3a is stuck stale for 1322.607444, current state stale+active+clean, last acting [4]
 ```
 * 这边的修复方法是把这个OSD 重新挂载回去，然后修改权重为0，在剔除 
-`systemctl  start ceph-osd@4`
 ```
+systemctl  start ceph-osd@4
 [root@hostname cephfs]# ceph -s
     cluster 08068b52-f0ab-4a50-8dad-cc3512082031
      health HEALTH_OK
@@ -148,11 +148,14 @@ pg 0.3a is stuck stale for 1322.607444, current state stale+active+clean, last a
                  576 active+clean
 ```
 * 调整权重为0 
-```ceph osd crush reweight osd.4 0```
+```
+ceph osd crush reweight osd.4 0
+```
 * 删除OSD 
-```systemctl  stop ceph-osd@4```
-```ceph osd out 4```
-```[root@hostname cephfs]# ceph -s
+```
+systemctl  stop ceph-osd@4
+ceph osd out 4
+[root@hostname cephfs]# ceph -s
     cluster 08068b52-f0ab-4a50-8dad-cc3512082031
      health HEALTH_OK
      monmap e1: 1 mons at {mon1=221.230.143.150:6789/0}
