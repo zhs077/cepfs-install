@@ -148,8 +148,8 @@ pg 0.3a is stuck stale for 1322.607444, current state stale+active+clean, last a
                  576 active+clean
 ```
 * 调整权重为0 
-ceph osd crush reweight osd.4 0
-* 删除
+`ceph osd crush reweight osd.4 0`
+* 删除OSD 
 `systemctl  stop ceph-osd@4`
 `ceph osd out 4`
 ```[root@hostname cephfs]# ceph -s
