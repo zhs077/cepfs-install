@@ -34,7 +34,7 @@ ID WEIGHT  TYPE NAME         UP/DOWN REWEIGHT PRIMARY-AFFINITY
 osdmap e95 pool 'rbd' (0) object '1.txt' -> pg 0.e0e3a40b (0.b) -> up ([4], p4) acting ([4], p4)
 ```
 * 停掉osd4
- systemctl stop ceph-osd@4
+ `systemctl stop ceph-osd@4`
  ```
  [root@hostname cephfs]# ceph -s
     cluster 08068b52-f0ab-4a50-8dad-cc3512082031
@@ -73,13 +73,14 @@ ID WEIGHT  TYPE NAME         UP/DOWN REWEIGHT PRIMARY-AFFINITY
  3 1.00000         osd.3          up  1.00000          1.00000 
  4 1.00000         osd.4        down  1.00000          1.00000 
 ```
+```
 [root@hostname cephfs]# ceph osd map rbd 1.txt
 osdmap e98 pool 'rbd' (0) object '1.txt' -> pg 0.e0e3a40b (0.b) -> up ([], p-1) acting ([], p-1)
 ```
-文件的读取和写入会卡主
+* 文件的读取和写入会卡主
+
 ```
 [root@hostname cephfs]# touch 4.txt
-c^H^H
 ```
 
 * 过几分钟后集群会自动修复，我们看下修复后的状态
@@ -109,4 +110,4 @@ c^H^H
                   11 stale+active+clean
  ```
 
-多了  recovery 11/46 objects degraded
+ * 集群状态出现 **recovery 11/46 objects degraded**
