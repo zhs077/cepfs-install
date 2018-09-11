@@ -34,3 +34,30 @@ ID WEIGHT  TYPE NAME         UP/DOWN REWEIGHT PRIMARY-AFFINITY
 osdmap e95 pool 'rbd' (0) object '1.txt' -> pg 0.e0e3a40b (0.b) -> up ([4], p4) acting ([4], p4)
 ```
 * 停掉osd4
+ systemctl stop ceph-osd@4
+ ```
+ [root@hostname cephfs]# ceph -s
+    cluster 08068b52-f0ab-4a50-8dad-cc3512082031
+     health HEALTH_ERR
+            206 pgs are stuck inactive for more than 300 seconds
+            161 pgs degraded
+            47 pgs peering
+            11 pgs stale
+            206 pgs stuck inactive
+            206 pgs stuck unclean
+            161 pgs undersized
+            recovery 5/46 objects degraded (10.870%)
+            1/5 in osds are down
+     monmap e1: 1 mons at {mon1=221.230.143.150:6789/0}
+            election epoch 4, quorum 0 mon1
+      fsmap e8: 1/1/1 up {0=mds1=up:active}
+     osdmap e98: 5 osds: 4 up, 5 in; 208 remapped pgs
+            flags sortbitwise,require_jewel_osds
+      pgmap v52122: 576 pgs, 3 pools, 23083 bytes data, 23 objects
+            5312 MB used, 18608 GB / 18613 GB avail
+            5/46 objects degraded (10.870%)
+                 357 active+clean
+                 161 undersized+degraded+peered
+                  47 peering
+                  11 stale+active+clean
+```
