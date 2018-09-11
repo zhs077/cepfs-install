@@ -82,6 +82,7 @@ osdmap e98 pool 'rbd' (0) object '1.txt' -> pg 0.e0e3a40b (0.b) -> up ([], p-1) 
 c^H^H
 ```
 * 过几分钟后集群会自动修复，我们看下修复后的状态
+
 ```
 [root@hostname ~]# ceph -s
     cluster 08068b52-f0ab-4a50-8dad-cc3512082031
@@ -95,7 +96,7 @@ c^H^H
             8 requests are blocked > 32 sec
             ```
             
-            `recovery 11/46 objects degraded (23.913%)`
+            recovery 11/46 objects degraded (23.913%)
             ```
             1/5 in osds are down
      monmap e1: 1 mons at {mon1=221.230.143.150:6789/0}
