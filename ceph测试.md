@@ -1,5 +1,5 @@
 
-## 单副本情况
+## 单副本情况,故障域OSD
 * ceph -s
 ```
 [root@hostname ~]# ceph -s
