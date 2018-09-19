@@ -83,13 +83,14 @@ mon osd down out interval = 900
     /var/lib/ceph/bootstrap-mds/ceph.keyring 拷贝到所有机器（理论上拷贝到mds机器就可以） 
     /etc/ceph/* 拷贝到所有机器
 ## 新增mon2,mon3节点 <br>
+    *** ceph.conf 需要存在mon1 mon2 ***
 ### 1.在mon2上创建一个默认的数据目录
  ```sudo -u ceph mkdir /var/lib/ceph/mon/ceph-mon2``` <br>
 ### 2.在mon2上修改ceph.mon.keyring属主和属组为ceph
  ```chown ceph.ceph /tmp/ceph.mon.keyring``` <br>
 ### 3.获取密钥和monmap信息(从mon1机器拷贝过来的秘钥)
  ```ceph auth get mon. -o /tmp/ceph.mon.keyring```  <br>
-exported keyring for mon.
+exported keyring for mon.<br>
  ```ceph mon getmap -o /tmp/ceph.mon.map``` <br>
 	got monmap epoch 1
 ### 4.初始化mon
