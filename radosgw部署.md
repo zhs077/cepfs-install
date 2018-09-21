@@ -31,6 +31,10 @@ systemctl start ceph-radosgw@rgw.node1
 systemctl status ceph-radosgw@rgw.node1
 systemctl enable ceph-radosgw@rgw.node1
 ```
+## 测试
+```
+curl "http://mon1:8082"
+```
 # 部署其他的机器
 以下命令在node1上执行即可
 ##  创建对应的client.rgw.node2、client.rgw.node3用户并进行授权
@@ -71,4 +75,4 @@ systemctl start ceph-radosgw@rgw.node2
 systemctl status ceph-radosgw@rgw.node
 systemctl enable ceph-radosgw@rgw.node2
 ```
-/etc/ceph/ceph.client.radosgw.keyring 拷贝到其他机器上，参考上面部署方式
+
