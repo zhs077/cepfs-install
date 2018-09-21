@@ -240,3 +240,5 @@ systemctl start ceph-radosgw@rgw.node1
 systemctl status ceph-radosgw@rgw.node1
 systemctl enable ceph-radosgw@rgw.node1
 ```
+## 部署其他的机器
+/etc/ceph/ceph.client.radosgw.keyring 拷贝到其他机器上，参考上面部署方式
