@@ -76,3 +76,30 @@ systemctl status ceph-radosgw@rgw.node
 systemctl enable ceph-radosgw@rgw.node2
 ```
 
+# 测试
+## 创建一个测试账号
+``` sudo radosgw-admin user create --uid="testuser" --display-name="First User" ```
+## 测试脚本
+```
+import boto
+import boto.s3.connection
+access_key = 'O2C2WAEAD86UBTSXM5U6'
+secret_key = 'nUwJoTKkkGLpSbzOUdEvLkZiFVDEb8aAZqyc8LNr'
+conn = boto.connect_s3(
+aws_access_key_id = access_key,
+aws_secret_access_key = secret_key,
+host = '127.0.0.1',
+port = 8082,
+is_secure=False,
+calling_format = boto.s3.connection.OrdinaryCallingFormat(),
+)
+bucket = conn.create_bucket('my-new-bucket')
+for bucket in conn.get_all_buckets():
+        print "{name}\t{created}".format(
+                name = bucket.name,
+                created = bucket.creation_date,
+)
+```
+
+
+
