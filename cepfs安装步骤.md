@@ -206,3 +206,26 @@ exported keyring for mon.<br>
   备注：本地机器需要 存在/etc/ceph/ceph.client.admin.keyring <br>
   参考
 https://yq.aliyun.com/articles/604372
+
+# 对象网关部署
+## 创建keyring
+```sudo ceph-authtool --create-keyring /etc/ceph/ceph.client.radosgw.keyring ```
+   creating /etc/ceph/ceph.client.radosgw.keyring <br>
+## 修改文件权限
+```sudo chown ceph:ceph /etc/ceph/ceph.client.radosgw.keyring```
+## 生成ceph-radosgw服务对应的用户和key
+```sudo ceph-authtool /etc/ceph/ceph.client.radosgw.keyring -n client.rgw.node1 --gen-key```
+## 为用户添加访问权限
+```sudo ceph-authtool -n client.rgw.node1 --cap osd 'allow rwx' --cap mon 'allow rwx' /etc/ceph/ceph.client.radosgw.keyring```
+## 导入keyring到集群中
+```sudo ceph -k /etc/ceph/ceph.client.admin.keyring auth add client.rgw.node1 -i /etc/ceph/ceph.client.radosgw.keyring```
+  added key for client.rgw.node1 <br>
+## 配置ceph.conf
+```
+[client.rgw.node1]
+host=node1
+keyring=/etc/ceph/ceph.client.radosgw.keyring
+log file=/var/log/radosgw/client.radosgw.gateway.log
+rgw_s3_auth_use_keystone = False
+rgw_frontends = civetweb port=8080
+```
