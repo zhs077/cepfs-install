@@ -229,3 +229,14 @@ log file=/var/log/radosgw/client.radosgw.gateway.log
 rgw_s3_auth_use_keystone = False
 rgw_frontends = civetweb port=8080
 ```
+## 创建日志目录并修改权限
+  ```
+  mkdir /var/log/radosgw
+  chown ceph:ceph /var/log/radosgw
+  ```
+## 启动rgw
+```
+systemctl start ceph-radosgw@rgw.node1
+systemctl status ceph-radosgw@rgw.node1
+systemctl enable ceph-radosgw@rgw.node1
+```
