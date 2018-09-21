@@ -60,9 +60,15 @@ rgw_s3_auth_use_keystone = False
 rgw_frontends = civetweb port=8080
 ```
 ##  把创建好的ceph.client.radosgw.keyring和ceph.conf传到node2和node3上
-## 在node2和node3上分别创建日志目录并修改权限
+## 创建日志目录并修改权限
+  ```
+  mkdir /var/log/radosgw
+  chown ceph:ceph /var/log/radosgw
+  ```
+## 启动rgw
 ```
-mkdir /var/log/radosgw
-chown ceph:ceph /var/log/radosgw
+systemctl start ceph-radosgw@rgw.node2
+systemctl status ceph-radosgw@rgw.node
+systemctl enable ceph-radosgw@rgw.node2
 ```
 /etc/ceph/ceph.client.radosgw.keyring 拷贝到其他机器上，参考上面部署方式
