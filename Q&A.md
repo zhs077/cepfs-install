@@ -81,3 +81,5 @@
  nc -v -l -n 17480 > /dev/null
  time dd if=/dev/zero | nc -v  221.230.143.150 17480
 ```
+随机读性能
+fio -filename=//mnt/cephfs/dlw1  -direct=1 -iodepth 1 -thread -rw=randread -ioengine=psync -bs=16k -size=2G -numjobs=10 -runtime=60 -group_reporting -name=mytest
