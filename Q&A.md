@@ -74,7 +74,16 @@
  ### 磁盘故障恢复方法
  当一个 OSD 被 out 后，部分 PG 限于 active+remapped 状态是经常出现的。解决办法是先运行 ceph osd in {osd-num} 将集群状态恢复到初始状态，然后运行  ceph osd crush reweight osd.{osd-num} 0 来将这个 osd 的 crush weight 修改为 0，然后集群会开始数据迁移。对小集群来说，reweight 命令甚至更好些。
 等集群迁移完毕后，在将这个osd删除掉
-  
+
+ ### 挂载cephfs
+  ```
+  mount -vw -t ceph mon1:6789:/ /mnt/cephfs -o name=admin,secret=AQBampNbrmnXBxAAYXtTNP0u7qzh1JpFvY887g==
+ 
+  parsing options: rw,name=admin,secret=AQBampNbrmnXBxAAYXtTNP0u7qzh1JpFvY887g==
+  mount error 5 = Input/output error```
+  * 解决办法
+ `` ceph osd crush tunables hammer ```
+
 
 ## 网络带宽测试方法
  ```
