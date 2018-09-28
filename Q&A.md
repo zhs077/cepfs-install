@@ -109,6 +109,7 @@
   ```
   * 解决办法
  `` ceph osd crush tunables hammer ```（暴力方式，关闭所有特性）采用 关闭 chooseleaf_vary_r  chooseleaf_stable 特性方法
+ http://docs.ceph.com/docs/jewel/rados/operations/crush-map/#tunables
  ```
  ceph osd getcrushmap -o /tmp/crush
  crushtool -i /tmp/crush --set-chooseleaf-vary-r 0 --set-chooseleaf-stable 0  -o /tmp/crush.new
