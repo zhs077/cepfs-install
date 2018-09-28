@@ -204,6 +204,10 @@ exported keyring for mon.<br>
 ### 3.ceph挂载方式
   ```  ceph-fuse -m xxxx,yyyy,yyy:6789 /mnt/cephfs```<br>
   备注：本地机器需要 存在/etc/ceph/ceph.client.admin.keyring <br>
+  
+  ### 开机自动挂载
+  ```echo "mon1,mon2,mon3:6789:/     /mnt/cephfs    ceph    name=admin,secret=AQBampNbrmnXBxAAYXtTNP0u7qzh1JpFvY887g==,noatime,_netdev    0       2" >>/etc/fstab```
+  
   参考
 https://yq.aliyun.com/articles/604372
 
