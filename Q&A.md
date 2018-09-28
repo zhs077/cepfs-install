@@ -78,11 +78,43 @@
  ### 挂载cephfs
   ```
   mount -vw -t ceph mon1:6789:/ /mnt/cephfs -o name=admin,secret=AQBampNbrmnXBxAAYXtTNP0u7qzh1JpFvY887g==
- 
   parsing options: rw,name=admin,secret=AQBampNbrmnXBxAAYXtTNP0u7qzh1JpFvY887g==
-  mount error 5 = Input/output error```
+  mount error 5 = Input/output error
+  ```
+  * 原因是系统内核版本较低，某些特性不支持，http://cephnotes.ksperis.com/blog/2014/01/21/feature-set-mismatch-error-on-ceph-kernel-client/
+  ```
+  ceph osd crush show
+  {
+    "choose_local_tries": 0,
+    "choose_local_fallback_tries": 0,
+    "choose_total_tries": 50,
+    "chooseleaf_descend_once": 1,
+    "chooseleaf_vary_r": 0,
+    "chooseleaf_stable": 0,
+    "straw_calc_version": 1,
+    "allowed_bucket_algs": 54,
+    "profile": "unknown",
+    "optimal_tunables": 0,
+    "legacy_tunables": 0,
+    "minimum_required_version": "bobtail",
+    "require_feature_tunables": 1,
+    "require_feature_tunables2": 1,
+    "has_v2_rules": 0,
+    "require_feature_tunables3": 0,
+    "has_v3_rules": 0,
+    "has_v4_buckets": 0,
+    "require_feature_tunables5": 0,
+    "has_v5_rules": 0
+}
+  ```
   * 解决办法
- `` ceph osd crush tunables hammer ```
+ `` ceph osd crush tunables hammer ```（暴力方式，关闭所有特性）
+ 关闭 chooseleaf_vary_r  chooseleaf_stable 特性
+ ```
+ ceph osd getcrushmap -o /tmp/crush
+ crushtool -i /tmp/crush --set-chooseleaf-vary-r 0 --set-chooseleaf-stable 0  -o /tmp/crush.new
+ ceph osd setcrushmap -i /tmp/crush.new
+ ```
 
 
 ## 网络带宽测试方法
