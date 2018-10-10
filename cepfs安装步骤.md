@@ -25,7 +25,7 @@ auth_service_required = cephx
 auth_client_required = cephx
 public_network = xxxx.0/24
 mon_clock_drift_allowed = 2
-osd journal size = 1024
+osd journal size = 81920
 #设置副本数
 osd pool default size = 1
 #设置最小副本数
